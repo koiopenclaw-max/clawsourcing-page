@@ -643,7 +643,7 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
       <div class="demo-panel active" id="tab-consult">
         <h3 style="margin-bottom: var(--space-sm);">Free Consult Form</h3>
         <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">No payment. No account. Tell us about the role and we follow up within 24 hours.</p>
-        <form onsubmit="event.preventDefault(); alert('Demo only — form not connected yet.')">
+        <form id="consultForm" onsubmit="submitConsultForm(event)">
           <div class="form-grid">
             <div class="form-group"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
             <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"></div>
@@ -1189,6 +1189,87 @@ function showDash(view) {
   document.getElementById('dash-admin').style.display = view === 'admin' ? 'block' : 'none';
   document.querySelectorAll('.dash-toggle').forEach(b => b.classList.remove('active'));
   event.target.classList.add('active');
+}
+
+// === Supabase Contact Form ===
+const SUPABASE_URL = 'https://mtxyibzekucxvwxlysbx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10eHlpYnpla3VjeHZ3eGx5c2J4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQwMDQ3MjgsImV4cCI6MjA4OTU4MDcyOH0.cZX230IvZLtjHQ1kP9zpENa5CDSmZwNPx3Cp8QVWepc';
+
+async function submitConsultForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('consultForm');
+  const btn = form.querySelector('button[type="submit"]');
+  const origText = btn.textContent;
+  
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  
+  const inputs = form.querySelectorAll('input, textarea');
+  const fullName = inputs[0]?.value?.trim() || '';
+  const email = inputs[1]?.value?.trim() || '';
+  const companyName = inputs[2]?.value?.trim() || null;
+  const companyWebsite = inputs[3]?.value?.trim() || null;
+  const roleDescription = inputs[4]?.value?.trim() || null;
+  const currentTools = inputs[5]?.value?.trim() || null;
+  const notes = inputs[6]?.value?.trim() || null;
+
+  const selectedClaws = [];
+  form.querySelectorAll('.claw-type-option.selected').forEach(el => {
+    const text = el.textContent.trim();
+    const map = {'Chief of Staff':'chief_of_staff','Content':'content','Support':'support','Sales':'sales','Dev':'dev','Ops':'ops','Custom':'custom'};
+    for (const [k,v] of Object.entries(map)) { if (text.includes(k)) selectedClaws.push(v); }
+  });
+
+  if (!fullName || !email) {
+    alert('Please fill in your name and email.');
+    btn.disabled = false;
+    btn.textContent = origText;
+    return;
+  }
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/contact_requests`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        full_name: fullName,
+        email: email,
+        company_name: companyName,
+        company_website: companyWebsite,
+        role_description: roleDescription,
+        current_tools: currentTools,
+        claw_types: selectedClaws.length ? selectedClaws : null,
+        notes: notes,
+        source: 'landing_page',
+        language: document.documentElement.lang === 'bg' ? 'bg' : 'en'
+      })
+    });
+
+    if (res.ok) {
+      form.innerHTML = `
+        <div style="text-align:center; padding: var(--space-lg);">
+          <div style="font-size: 3rem; margin-bottom: var(--space-sm);">✅</div>
+          <h3 style="margin-bottom: var(--space-xs);">Request received!</h3>
+          <p class="text-muted">We'll follow up within 24 hours. Check your inbox at <strong>${email}</strong>.</p>
+        </div>`;
+    } else {
+      const err = await res.json().catch(() => ({}));
+      console.error('Supabase error:', err);
+      alert('Something went wrong. Please try again or email us directly.');
+      btn.disabled = false;
+      btn.textContent = origText;
+    }
+  } catch (err) {
+    console.error('Network error:', err);
+    alert('Connection error. Please check your internet and try again.');
+    btn.disabled = false;
+    btn.textContent = origText;
+  }
 }
 
 // FAQ accordion
