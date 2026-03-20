@@ -393,6 +393,7 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
 .faq-list { max-width: 800px; margin: var(--space-lg) auto 0; }
 .faq-item { border-bottom: 1px solid var(--border-subtle); }
 .faq-q { width: 100%; background: none; border: none; padding: var(--space-md) 0; color: var(--text); font-size: 1.1rem; font-family: var(--font-body); font-weight: 500; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.2s; }
+.dash-toggle.active { border-color: var(--accent) !important; color: var(--accent) !important; background: var(--accent-glow) !important; }
 .faq-q:hover { color: var(--accent); }
 .faq-q .arrow { font-size: 1.2rem; transition: transform 0.3s; color: var(--text-dim); }
 .faq-item.open .faq-q .arrow { transform: rotate(45deg); color: var(--accent); }
@@ -747,8 +748,53 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
             <input type="password" placeholder="sk-ant-... or sk-..." style="font-family: var(--font-mono);">
           </div>
           <div class="api-key-help">
-            📹 <strong>30-second guide:</strong> <a href="#">How to get your Claude API key</a> | <a href="#">How to get your OpenAI API key</a><br>
-            <span style="font-size: 0.8rem; color: var(--text-dim);">4 clicks. Copy. Paste here. Done.</span>
+            <strong>How to get your key — 4 clicks:</strong>
+            <div style="margin-top: 0.75rem; display: grid; gap: 0.5rem;">
+              <button class="btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.85rem; width: 100%; justify-content: flex-start;" onclick="document.getElementById('guide-claude').style.display = document.getElementById('guide-claude').style.display === 'none' ? 'block' : 'none'">📋 Claude (Anthropic) — show steps</button>
+              <div id="guide-claude" style="display:none; padding: 1rem; background: var(--bg); border-radius: 8px; border: 1px solid var(--border);">
+                <div style="display: grid; gap: 0.75rem;">
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">1</span>
+                    <div><strong style="color: var(--text);">Go to console.anthropic.com</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Create a free account if you don't have one</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">2</span>
+                    <div><strong style="color: var(--text);">Click "API Keys" in the left sidebar</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Settings → API Keys</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">3</span>
+                    <div><strong style="color: var(--text);">Click "Create Key"</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Name it anything (e.g. "My Claw")</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--green); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">4</span>
+                    <div><strong style="color: var(--green);">Copy the key and paste it here</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Starts with sk-ant-... — save it, you won't see it again</span></div>
+                  </div>
+                </div>
+                <p style="margin-top: 0.75rem; padding: 0.5rem 0.75rem; background: var(--surface); border-radius: 6px; font-size: 0.8rem; color: var(--text-dim);">💳 Anthropic requires a credit card to activate API access. Typical cost: $20-50/month.</p>
+              </div>
+              <button class="btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.85rem; width: 100%; justify-content: flex-start;" onclick="document.getElementById('guide-openai').style.display = document.getElementById('guide-openai').style.display === 'none' ? 'block' : 'none'">📋 OpenAI (ChatGPT) — show steps</button>
+              <div id="guide-openai" style="display:none; padding: 1rem; background: var(--bg); border-radius: 8px; border: 1px solid var(--border);">
+                <div style="display: grid; gap: 0.75rem;">
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">1</span>
+                    <div><strong style="color: var(--text);">Go to platform.openai.com</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Sign in with your OpenAI account</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">2</span>
+                    <div><strong style="color: var(--text);">Go to API Keys page</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Dashboard → API Keys (or direct: platform.openai.com/api-keys)</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--accent); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">3</span>
+                    <div><strong style="color: var(--text);">Click "Create new secret key"</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Name it anything (e.g. "My Claw")</span></div>
+                  </div>
+                  <div style="display: flex; gap: 0.75rem; align-items: flex-start;">
+                    <span style="flex-shrink:0; width:28px; height:28px; display:flex; align-items:center; justify-content:center; background: var(--green); color: var(--bg); border-radius:50%; font-size:0.8rem; font-weight:700;">4</span>
+                    <div><strong style="color: var(--green);">Copy the key and paste it here</strong><br><span style="color: var(--text-dim); font-size:0.85rem;">Starts with sk-... — save it, you won't see it again</span></div>
+                  </div>
+                </div>
+                <p style="margin-top: 0.75rem; padding: 0.5rem 0.75rem; background: var(--surface); border-radius: 6px; font-size: 0.8rem; color: var(--text-dim);">💳 OpenAI requires a credit card and minimum $5 credit to activate API access.</p>
+              </div>
+            </div>
           </div>
           <div style="margin-top: var(--space-md); display:flex; gap: 0.5rem;">
             <button class="btn-ghost" onclick="wizardNext(2)">← Back</button>
@@ -775,19 +821,186 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
 
       <!-- Tab 3: Dashboard -->
       <div class="demo-panel" id="tab-dashboard">
-        <h3 style="margin-bottom: 0.25rem;">Your Client Dashboard</h3>
-        <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Once live, you see your Claw's status at a glance.</p>
-        <div class="status-grid">
-          <div class="status-row"><span class="status-label">🟢 Claw Status</span><span class="status-badge green">Live</span></div>
-          <div class="status-row"><span class="status-label">📡 Channel: Telegram</span><span class="status-badge green">Active</span></div>
-          <div class="status-row"><span class="status-label">📧 Channel: Email</span><span class="status-badge green">Active</span></div>
-          <div class="status-row"><span class="status-label">🧠 LLM: Claude Sonnet</span><span class="status-badge green">Connected</span></div>
-          <div class="status-row"><span class="status-label">💾 Last Backup</span><span class="status-badge blue">2 hours ago</span></div>
-          <div class="status-row"><span class="status-label">📈 Uptime (30d)</span><span class="status-badge green">99.9%</span></div>
-          <div class="status-row"><span class="status-label">🔧 Last Improvement</span><span class="status-badge amber">3 days ago</span></div>
-          <div class="status-row"><span class="status-label">💳 Next Invoice</span><span class="status-badge blue">€550 on Apr 1</span></div>
+        <div style="display: flex; gap: 0.5rem; margin-bottom: var(--space-md);">
+          <button class="btn-ghost dash-toggle active" style="padding: 0.4rem 1rem; font-size: 0.85rem;" onclick="showDash('client')">👤 Client View</button>
+          <button class="btn-ghost dash-toggle" style="padding: 0.4rem 1rem; font-size: 0.85rem;" onclick="showDash('admin')">🔧 Admin View (our side)</button>
         </div>
-        <p class="text-muted" style="margin-top: var(--space-md); font-size: 0.85rem;">You see status. We handle everything behind it.</p>
+
+        <!-- CLIENT DASHBOARD -->
+        <div id="dash-client">
+          <h3 style="margin-bottom: 0.25rem;">Your Dashboard</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Everything about your Claw at a glance. You see status — we handle everything behind it.</p>
+
+          <div class="status-grid">
+            <div class="status-row"><span class="status-label">🟢 Claw Status</span><span class="status-badge green">Live</span></div>
+            <div class="status-row"><span class="status-label">📡 Channel: Telegram</span><span class="status-badge green">Active</span></div>
+            <div class="status-row"><span class="status-label">📧 Channel: Email</span><span class="status-badge green">Active</span></div>
+            <div class="status-row"><span class="status-label">🧠 LLM: Claude Sonnet</span><span class="status-badge green">Connected</span></div>
+            <div class="status-row"><span class="status-label">💾 Last Backup</span><span class="status-badge blue">2 hours ago</span></div>
+            <div class="status-row"><span class="status-label">📈 Uptime (30d)</span><span class="status-badge green">99.9%</span></div>
+            <div class="status-row"><span class="status-label">🔧 Last Improvement</span><span class="status-badge amber">3 days ago</span></div>
+            <div class="status-row"><span class="status-label">💳 Next Invoice</span><span class="status-badge blue">€550 on Apr 1</span></div>
+          </div>
+
+          <!-- MAINTENANCE LOG (client sees) -->
+          <h3 style="margin: var(--space-md) 0 0.5rem;">📋 Maintenance History</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-sm); font-size: 0.85rem;">Every check we perform is logged. Full transparency — you see what we do.</p>
+          <div class="status-grid">
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 19, 14:30</span>
+                <span class="status-badge green">Routine Check</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Memory system optimization — reduced context usage by 12%. No action needed from you.</span>
+            </div>
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 17, 09:15</span>
+                <span class="status-badge amber">Fix Applied</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Email channel reconnected after OAuth token expired. Fixed automatically, no downtime.</span>
+            </div>
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 15, 11:00</span>
+                <span class="status-badge green">Routine Check</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">All systems nominal. Disk usage 34%, memory healthy, skills up to date.</span>
+            </div>
+          </div>
+
+          <!-- SUPPORT TICKET -->
+          <h3 style="margin: var(--space-md) 0 0.5rem;">🎫 Report an Issue</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-sm); font-size: 0.85rem;">Something off? Tell us. We typically respond within 2 hours. But honestly — we usually catch problems before you do.</p>
+          <div class="form-group full">
+            <select style="padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); font-size: 0.95rem;">
+              <option>Category: Select...</option>
+              <option>My Claw isn't responding</option>
+              <option>Responses seem off / wrong tone</option>
+              <option>Channel disconnected</option>
+              <option>Feature request</option>
+              <option>Billing question</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group full" style="margin-top: 0.5rem;">
+            <textarea placeholder="Describe what's happening..." style="padding: 0.75rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-family: var(--font-body); font-size: 0.95rem; min-height: 80px; resize: vertical;"></textarea>
+          </div>
+          <button class="btn-primary" style="margin-top: 0.5rem;" onclick="alert('Demo only')">Submit Ticket</button>
+        </div>
+
+        <!-- ADMIN DASHBOARD -->
+        <div id="dash-admin" style="display: none;">
+          <h3 style="margin-bottom: 0.25rem;">🔧 Operations Dashboard</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Bird's eye view of all client installations. Our monitoring AI worker watches this 24/7.</p>
+
+          <!-- SUMMARY -->
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: var(--space-md);">
+            <div style="padding: 1rem; background: var(--surface); border-radius: 10px; text-align: center;">
+              <div style="font-family: var(--font-display); font-size: 2rem; color: var(--green);">12</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Active Claws</div>
+            </div>
+            <div style="padding: 1rem; background: var(--surface); border-radius: 10px; text-align: center;">
+              <div style="font-family: var(--font-display); font-size: 2rem; color: var(--green);">99.7%</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Avg Uptime</div>
+            </div>
+            <div style="padding: 1rem; background: var(--surface); border-radius: 10px; text-align: center;">
+              <div style="font-family: var(--font-display); font-size: 2rem; color: var(--accent);">1</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">Open Tickets</div>
+            </div>
+            <div style="padding: 1rem; background: var(--surface); border-radius: 10px; text-align: center;">
+              <div style="font-family: var(--font-display); font-size: 2rem; color: var(--blue);">€6,600</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);">MRR</div>
+            </div>
+          </div>
+
+          <!-- ALL INSTANCES -->
+          <h3 style="margin-bottom: 0.5rem;">All Instances</h3>
+          <div class="status-grid">
+            <div class="status-row">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="width: 8px; height: 8px; background: var(--green); border-radius: 50%;"></span>
+                <div>
+                  <span class="status-label" style="font-size: 0.9rem;">Acme Corp — Support Claw</span>
+                  <div style="font-size: 0.75rem; color: var(--text-dim);">fra1 · s-1vcpu-2gb · Last check: 5 min ago</div>
+                </div>
+              </div>
+              <span class="status-badge green">Healthy</span>
+            </div>
+            <div class="status-row">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="width: 8px; height: 8px; background: var(--green); border-radius: 50%;"></span>
+                <div>
+                  <span class="status-label" style="font-size: 0.9rem;">DataFlow GmbH — Chief of Staff</span>
+                  <div style="font-size: 0.75rem; color: var(--text-dim);">ams3 · s-1vcpu-1gb · Last check: 3 min ago</div>
+                </div>
+              </div>
+              <span class="status-badge green">Healthy</span>
+            </div>
+            <div class="status-row">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%;"></span>
+                <div>
+                  <span class="status-label" style="font-size: 0.9rem;">TechStart BG — Sales Claw</span>
+                  <div style="font-size: 0.75rem; color: var(--text-dim);">fra1 · s-1vcpu-1gb · Last check: 2 min ago</div>
+                </div>
+              </div>
+              <span class="status-badge amber">High memory</span>
+            </div>
+            <div class="status-row">
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <span style="width: 8px; height: 8px; background: var(--green); border-radius: 50%;"></span>
+                <div>
+                  <span class="status-label" style="font-size: 0.9rem;">Studio Mira — Content Claw</span>
+                  <div style="font-size: 0.75rem; color: var(--text-dim);">fra1 · s-1vcpu-2gb · Last check: 1 min ago</div>
+                </div>
+              </div>
+              <span class="status-badge green">Healthy</span>
+            </div>
+          </div>
+
+          <!-- RECENT MAINTENANCE -->
+          <h3 style="margin: var(--space-md) 0 0.5rem;">Recent Maintenance Log</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-sm); font-size: 0.85rem;">Every check logged. Every fix documented. Data feeds into service improvement analytics.</p>
+          <div class="status-grid">
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 20, 10:00 · TechStart BG</span>
+                <span class="status-badge amber">Investigating</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Memory usage at 78%. Checking for context bloat. Compaction scheduled.</span>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Worker: Koi · Auto-detected</span>
+            </div>
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 20, 06:00 · ALL</span>
+                <span class="status-badge green">Routine</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Daily health sweep: 12/12 instances healthy. Backups verified. No anomalies.</span>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Worker: Auto · Scheduled</span>
+            </div>
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 19, 14:30 · Acme Corp</span>
+                <span class="status-badge green">Resolved</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Cross-client upgrade: new memory optimization skill deployed. Context usage -12%.</span>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Worker: Koi · Proactive improvement</span>
+            </div>
+            <div class="status-row" style="flex-direction: column; align-items: flex-start; gap: 0.25rem;">
+              <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">Mar 17, 09:15 · Acme Corp</span>
+                <span class="status-badge green">Resolved</span>
+              </div>
+              <span class="status-label" style="font-size: 0.9rem;">Email OAuth token expired → auto-refreshed. No downtime. Client unaware.</span>
+              <span style="font-size: 0.8rem; color: var(--text-dim);">Worker: Auto · Detected before client report</span>
+            </div>
+          </div>
+
+          <p style="margin-top: var(--space-md); padding: var(--space-sm) 1rem; background: var(--surface); border-radius: 8px; font-size: 0.85rem; color: var(--text-muted);">
+            <strong style="color: var(--accent);">Why we log everything:</strong> Maintenance data feeds into pattern analysis. If 3 clients hit the same OAuth issue, we build an auto-fix. Every log entry makes the service better for everyone.
+          </p>
+        </div>
       </div>
 
       <!-- Tab 4: Offboarding -->
@@ -968,6 +1181,14 @@ function wizardNext(step) {
 function selectLLM(el, provider) {
   document.querySelectorAll('.llm-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
+}
+
+// Dashboard toggle
+function showDash(view) {
+  document.getElementById('dash-client').style.display = view === 'client' ? 'block' : 'none';
+  document.getElementById('dash-admin').style.display = view === 'admin' ? 'block' : 'none';
+  document.querySelectorAll('.dash-toggle').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
 }
 
 // FAQ accordion
