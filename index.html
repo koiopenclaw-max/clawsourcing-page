@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clawsourcing — AI Employees, Engineered for Your Business</title>
-<meta name="description" content="Custom-built AI employees that actually work. Not configured from templates — engineered from scratch for your exact workflows. Setup €1,400 + €550/mo.">
+<meta name="description" content="Custom-built AI employees that actually work. Not configured from templates — engineered from scratch for your exact workflows.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300..700;1,9..40,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -24,9 +24,9 @@
   --accent-vivid: #f5b060;
   --green: #4ade80;
   --red: #f87171;
-  --red-dim: #f8717140;
   --green-dim: #4ade8030;
-  --gradient-warm: linear-gradient(135deg, #f0a050, #e8784a);
+  --blue: #60a5fa;
+  --blue-dim: #60a5fa20;
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-body: 'DM Sans', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -40,7 +40,6 @@
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -53,12 +52,8 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection {
-  background: var(--accent);
-  color: var(--bg);
-}
+::selection { background: var(--accent); color: var(--bg); }
 
-/* --- NOISE OVERLAY --- */
 body::before {
   content: '';
   position: fixed;
@@ -68,16 +63,12 @@ body::before {
   z-index: 9999;
 }
 
-/* --- UTILITY --- */
 .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--space-md); }
 .text-muted { color: var(--text-muted); }
 .text-accent { color: var(--accent); }
 .text-center { text-align: center; }
-.font-mono { font-family: var(--font-mono); font-size: 0.85em; }
 
-/* --- TYPOGRAPHY --- */
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 400; line-height: 1.15; }
-
 h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); letter-spacing: -0.02em; }
 h2 { font-size: clamp(2rem, 4vw, 3.2rem); letter-spacing: -0.01em; }
 h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
@@ -85,663 +76,353 @@ h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
 p { max-width: 65ch; }
 p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
 
-/* --- HEADER --- */
+/* HEADER */
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   padding: var(--space-sm) 0;
   backdrop-filter: blur(20px);
   background: #0a0a0bcc;
   border-bottom: 1px solid var(--border-subtle);
-  transition: all 0.3s;
 }
-
-.header-inner {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--text);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.logo-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: var(--gradient-warm);
-  border-radius: 8px;
-  font-size: 1.1rem;
-}
-
-.header-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.4rem;
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 600;
-  font-size: 0.9rem;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.2s;
-}
+.header-inner { display: flex; justify-content: space-between; align-items: center; }
+.logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.logo-mark { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), #e8784a); border-radius: 8px; font-size: 1.1rem; }
+.header-nav { display: flex; gap: 2rem; align-items: center; }
+.header-nav a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+.header-nav a:hover { color: var(--text); }
+.header-cta { padding: 0.6rem 1.4rem; background: var(--accent); color: var(--bg); font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; transition: all 0.2s; }
 .header-cta:hover { background: var(--accent-vivid); transform: translateY(-1px); }
 
-/* --- HERO --- */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding-top: 80px;
-  position: relative;
-  overflow: hidden;
-}
+@media (max-width: 768px) { .header-nav { gap: 1rem; } .header-nav a:not(.header-cta) { display: none; } }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -20%;
-  right: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-
+/* HERO */
+.hero { min-height: 100vh; display: flex; align-items: center; padding-top: 80px; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; }
 .hero-content { position: relative; z-index: 2; }
+.hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: var(--surface); border: 1px solid var(--border); border-radius: 100px; font-size: 0.85rem; color: var(--text-muted); margin-bottom: var(--space-md); animation: fadeUp 0.8s ease both; }
+.hero-badge .dot { width: 6px; height: 6px; background: var(--green); border-radius: 50%; animation: pulse 2s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero h1 { margin-bottom: var(--space-md); animation: fadeUp 0.8s 0.1s ease both; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero .lead { margin-bottom: var(--space-lg); max-width: 55ch; animation: fadeUp 0.8s 0.2s ease both; }
+.hero-actions { display: flex; gap: var(--space-sm); flex-wrap: wrap; animation: fadeUp 0.8s 0.3s ease both; }
 
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 1rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: var(--space-md);
-  animation: fadeUp 0.8s ease both;
-}
-
-.hero-badge .dot {
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.hero h1 {
-  margin-bottom: var(--space-md);
-  animation: fadeUp 0.8s 0.1s ease both;
-}
-
-.hero h1 em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.hero .lead {
-  margin-bottom: var(--space-lg);
-  max-width: 55ch;
-  animation: fadeUp 0.8s 0.2s ease both;
-}
-
-.hero-actions {
-  display: flex;
-  gap: var(--space-sm);
-  flex-wrap: wrap;
-  animation: fadeUp 0.8s 0.3s ease both;
-}
-
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 2rem;
-  background: var(--accent);
-  color: var(--bg);
-  font-weight: 600;
-  font-size: 1rem;
-  border-radius: 10px;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s;
-}
+.btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: var(--accent); color: var(--bg); font-weight: 600; font-size: 1rem; border-radius: 10px; text-decoration: none; border: none; cursor: pointer; transition: all 0.25s; font-family: var(--font-body); }
 .btn-primary:hover { background: var(--accent-vivid); transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
-
-.btn-ghost {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 2rem;
-  background: transparent;
-  color: var(--text);
-  font-weight: 500;
-  font-size: 1rem;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.25s;
-}
+.btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; background: transparent; color: var(--text); font-weight: 500; font-size: 1rem; border-radius: 10px; border: 1px solid var(--border); text-decoration: none; cursor: pointer; transition: all 0.25s; }
 .btn-ghost:hover { border-color: var(--text-muted); background: var(--surface); }
 
-/* --- SOCIAL PROOF BAR --- */
-.proof-bar {
-  padding: var(--space-lg) 0;
-  border-bottom: 1px solid var(--border-subtle);
-}
+/* SECTION */
+.section { padding: var(--space-2xl) 0; }
+.section-label { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: var(--space-sm); }
+.section-head { margin-bottom: var(--space-lg); }
+.section-head p.lead { margin-top: var(--space-sm); }
 
-.proof-stats {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-xl);
-  flex-wrap: wrap;
-}
+/* FLOW VISUALIZATION */
+.flow-container { margin-top: var(--space-lg); }
+.flow-phase { margin-bottom: var(--space-lg); position: relative; padding-left: 40px; }
+.flow-phase::before { content: ''; position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.flow-phase:last-child::before { display: none; }
 
-.proof-stat {
-  text-align: center;
+.phase-marker {
+  position: absolute; left: 0; top: 0;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.8rem; font-weight: 600;
+  z-index: 2;
 }
+.phase-marker.free { background: var(--green-dim); color: var(--green); border: 2px solid var(--green); }
+.phase-marker.paid { background: var(--accent-glow); color: var(--accent); border: 2px solid var(--accent); }
+.phase-marker.active { background: var(--blue-dim); color: var(--blue); border: 2px solid var(--blue); }
 
-.proof-stat .number {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  color: var(--accent);
-  display: block;
-}
+.phase-header { margin-bottom: var(--space-sm); }
+.phase-header h3 { margin-bottom: 0.25rem; }
+.phase-tag { display: inline-block; padding: 0.15rem 0.6rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; margin-left: 0.5rem; vertical-align: middle; }
+.phase-tag.free { background: var(--green-dim); color: var(--green); }
+.phase-tag.payment { background: var(--accent-glow); color: var(--accent); }
+.phase-tag.us { background: var(--blue-dim); color: var(--blue); }
 
-.proof-stat .label {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-top: 0.25rem;
-}
-
-/* --- SECTION --- */
-.section {
-  padding: var(--space-2xl) 0;
-}
-
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: var(--space-sm);
-}
-
-.section-head {
-  margin-bottom: var(--space-lg);
-}
-
-.section-head p.lead {
-  margin-top: var(--space-sm);
-}
-
-/* --- PROBLEM SECTION --- */
-.problem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-}
-
-@media (max-width: 768px) {
-  .problem-grid { grid-template-columns: 1fr; }
-}
-
-.problem-card {
-  padding: var(--space-md);
+.phase-steps { display: grid; gap: 0.75rem; }
+.phase-step {
+  display: flex; gap: var(--space-sm); align-items: flex-start;
+  padding: var(--space-sm) 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  border-radius: 10px;
   transition: border-color 0.3s;
 }
-
-.problem-card:hover { border-color: var(--border); }
-
-.problem-card .icon {
-  font-size: 1.5rem;
-  margin-bottom: var(--space-sm);
+.phase-step:hover { border-color: var(--border); }
+.step-who {
+  flex-shrink: 0; padding: 0.2rem 0.6rem;
+  border-radius: 6px; font-size: 0.75rem; font-weight: 600;
+  white-space: nowrap;
 }
+.step-who.client { background: var(--accent-glow); color: var(--accent); }
+.step-who.us { background: var(--blue-dim); color: var(--blue); }
+.step-who.auto { background: var(--green-dim); color: var(--green); }
+.step-text { font-size: 0.95rem; color: var(--text-muted); }
+.step-text strong { color: var(--text); font-weight: 600; }
 
-.problem-card h3 { margin-bottom: 0.5rem; }
-.problem-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-/* --- COMPARISON --- */
-.compare-table {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 1px;
-  background: var(--border-subtle);
-  border-radius: 12px;
-  overflow: hidden;
+/* INTERACTIVE DEMO */
+.demo-container {
   margin-top: var(--space-lg);
-}
-
-.compare-table > div {
-  padding: 1rem 1.25rem;
   background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.compare-header {
-  font-weight: 600;
-  font-size: 0.85rem;
+.demo-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.demo-tab {
+  padding: 1rem 1.5rem;
+  background: none;
+  border: none;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--surface) !important;
-}
-
-.compare-header.ours {
-  color: var(--accent) !important;
-}
-
-.compare-feature {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
   font-weight: 500;
-  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
 }
 
-.compare-yes { color: var(--green); font-weight: 600; }
-.compare-no { color: var(--text-dim); }
-.compare-partial { color: var(--text-muted); }
+.demo-tab:hover { color: var(--text); }
+.demo-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--surface); }
 
-@media (max-width: 768px) {
-  .compare-table {
-    grid-template-columns: 1fr 1fr 1fr;
-    font-size: 0.85rem;
-  }
-  .compare-table > div { padding: 0.75rem; }
-}
-
-/* --- FEATURES --- */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-@media (max-width: 900px) {
-  .features-grid { grid-template-columns: 1fr; }
-}
-
-.feature-card {
+.demo-panel {
+  display: none;
   padding: var(--space-md);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
-  transition: all 0.3s;
+  animation: fadeUp 0.3s ease;
 }
 
-.feature-card:hover {
+.demo-panel.active { display: block; }
+
+/* CONSULT FORM */
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-sm); }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+.form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-group label {
+  font-size: 0.85rem; color: var(--text-muted); font-weight: 500;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus {
   border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 40px #00000040;
 }
 
-.feature-icon {
-  width: 48px;
-  height: 48px;
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.claw-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.claw-type-option {
+  padding: 0.6rem 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.claw-type-option:hover { border-color: var(--text-muted); }
+.claw-type-option.selected { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+.claw-type-option input { display: none; }
+
+/* SETUP WIZARD */
+.wizard-steps { display: flex; gap: 2rem; margin-bottom: var(--space-md); }
+.wizard-step-indicator {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; color: var(--text-dim);
+}
+.wizard-step-indicator.active { color: var(--accent); }
+.wizard-step-indicator.done { color: var(--green); }
+.wizard-step-num {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; border: 1.5px solid currentColor;
+  font-size: 0.8rem; font-weight: 600;
+}
+.wizard-step-indicator.active .wizard-step-num { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.wizard-step-indicator.done .wizard-step-num { background: var(--green); color: var(--bg); border-color: var(--green); }
+
+.wizard-panel { display: none; }
+.wizard-panel.active { display: block; animation: fadeUp 0.3s ease; }
+
+.channel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem; }
+.channel-option {
+  padding: 1.25rem;
   background: var(--surface);
-  border-radius: 10px;
-  font-size: 1.3rem;
-  margin-bottom: var(--space-sm);
-}
-
-.feature-card h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
-.feature-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-/* --- ROLES --- */
-.roles-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-md);
-}
-
-.role-card {
-  padding: var(--space-md);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border);
   border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
 }
+.channel-option:hover { border-color: var(--text-muted); transform: translateY(-2px); }
+.channel-option.selected { border-color: var(--accent); background: var(--accent-glow); }
+.channel-option .ch-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.channel-option .ch-name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
+.channel-option .ch-desc { font-size: 0.8rem; color: var(--text-dim); margin-top: 0.25rem; }
+.channel-option .ch-badge { display: inline-block; margin-top: 0.5rem; padding: 0.15rem 0.5rem; border-radius: 100px; font-size: 0.7rem; font-weight: 600; }
+.ch-badge.auto { background: var(--green-dim); color: var(--green); }
+.ch-badge.guided { background: var(--accent-glow); color: var(--accent); }
 
-.role-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: var(--gradient-warm);
-  opacity: 0;
-  transition: opacity 0.3s;
+.llm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.llm-option {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
+.llm-option:hover { border-color: var(--text-muted); }
+.llm-option.selected { border-color: var(--accent); background: var(--accent-glow); }
+.llm-option .llm-name { font-weight: 600; font-size: 1.1rem; color: var(--text); }
+.llm-option .llm-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+.llm-option .llm-cost { font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim); margin-top: 0.5rem; }
 
+.api-key-input-wrap {
+  margin-top: var(--space-sm);
+  display: none;
+}
+.api-key-input-wrap.visible { display: block; }
+
+.api-key-help {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.api-key-help a { color: var(--accent); text-decoration: none; }
+
+/* STATUS DASHBOARD */
+.status-grid { display: grid; gap: var(--space-sm); }
+.status-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-radius: 8px;
+}
+.status-label { color: var(--text); font-weight: 500; }
+.status-badge {
+  padding: 0.2rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.status-badge.green { background: var(--green-dim); color: var(--green); }
+.status-badge.amber { background: var(--accent-glow); color: var(--accent); }
+.status-badge.blue { background: var(--blue-dim); color: var(--blue); }
+
+/* ROLES */
+.roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-md); }
+.role-card { padding: var(--space-md); background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; position: relative; overflow: hidden; transition: all 0.3s; }
+.role-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg, var(--accent), #e8784a); opacity: 0; transition: opacity 0.3s; }
 .role-card:hover::before { opacity: 1; }
 .role-card:hover { transform: translateY(-3px); border-color: var(--border); }
-
 .role-card .role-emoji { font-size: 2rem; margin-bottom: var(--space-sm); }
 .role-card h3 { margin-bottom: 0.25rem; }
 .role-card .role-replaces { font-size: 0.85rem; color: var(--accent); margin-bottom: 0.75rem; }
 .role-card p { color: var(--text-muted); font-size: 0.9rem; }
-.role-tag {
-  display: inline-block;
-  margin-top: var(--space-sm);
-  padding: 0.25rem 0.75rem;
-  background: var(--accent-glow);
-  color: var(--accent);
-  font-size: 0.8rem;
-  font-weight: 600;
-  border-radius: 100px;
-}
+.role-tag { display: inline-block; margin-top: var(--space-sm); padding: 0.25rem 0.75rem; background: var(--accent-glow); color: var(--accent); font-size: 0.8rem; font-weight: 600; border-radius: 100px; }
 
-/* --- PROCESS --- */
-.process-steps {
-  display: grid;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-  counter-reset: step;
-}
-
-.process-step {
-  display: grid;
-  grid-template-columns: 64px 1fr;
-  gap: var(--space-md);
-  align-items: start;
-}
-
-.step-number {
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--accent);
-}
-
-.step-content h3 { margin-bottom: 0.25rem; }
-.step-content p { color: var(--text-muted); font-size: 0.95rem; }
-.step-time {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--text-dim);
-}
-
-/* --- PRICING --- */
+/* PRICING */
 .pricing-card {
-  max-width: 600px;
-  margin: var(--space-lg) auto 0;
-  padding: var(--space-lg);
-  background: var(--bg-card);
-  border: 1px solid var(--accent);
-  border-radius: 16px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+  max-width: 600px; margin: var(--space-lg) auto 0; padding: var(--space-lg);
+  background: var(--bg-card); border: 1px solid var(--accent); border-radius: 16px;
+  text-align: center; position: relative; overflow: hidden;
 }
-
-.pricing-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top, var(--accent-glow), transparent 60%);
-  pointer-events: none;
-}
-
+.pricing-card::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at top, var(--accent-glow), transparent 60%); pointer-events: none; }
 .pricing-card > * { position: relative; z-index: 1; }
-
-.price-setup {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin-bottom: var(--space-xs);
-}
-
-.price-main {
-  font-family: var(--font-display);
-  font-size: 4rem;
-  color: var(--text);
-  line-height: 1;
-}
-
+.price-setup { font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); margin-bottom: var(--space-xs); }
+.price-main { font-family: var(--font-display); font-size: 4rem; color: var(--text); line-height: 1; }
 .price-main span { font-size: 1.5rem; color: var(--text-muted); }
-
-.price-period {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  margin-bottom: var(--space-md);
-}
-
-.price-includes {
-  text-align: left;
-  list-style: none;
-  margin: var(--space-md) 0;
-  padding: var(--space-md) 0;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-.price-includes li {
-  padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
+.price-includes { text-align: left; list-style: none; margin: var(--space-md) 0; padding: var(--space-md) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.price-includes li { padding: 0.5rem 0; display: flex; align-items: center; gap: 0.75rem; color: var(--text-muted); font-size: 0.95rem; }
 .price-includes li .check { color: var(--green); font-weight: bold; }
+.price-total { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-dim); margin-top: var(--space-sm); }
 
-.price-total {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--text-dim);
-  margin-top: var(--space-sm);
-}
+/* OFFBOARDING */
+.offboard-timeline { max-width: 600px; margin: var(--space-lg) auto 0; }
+.offboard-item { display: flex; gap: var(--space-sm); padding: var(--space-sm) 0; border-bottom: 1px solid var(--border-subtle); }
+.offboard-day { flex-shrink: 0; width: 80px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+.offboard-text { color: var(--text-muted); font-size: 0.95rem; }
 
-/* --- SECURITY --- */
-.security-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
-
-@media (max-width: 900px) {
-  .security-grid { grid-template-columns: 1fr; }
-}
-
-.security-item {
-  padding: var(--space-md);
-  border-left: 2px solid var(--border);
-  transition: border-color 0.3s;
-}
-
+/* SECURITY */
+.security-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); }
+@media (max-width: 900px) { .security-grid { grid-template-columns: 1fr; } }
+.security-item { padding: var(--space-md); border-left: 2px solid var(--border); transition: border-color 0.3s; }
 .security-item:hover { border-color: var(--accent); }
 .security-item h3 { margin-bottom: 0.5rem; font-size: 1.1rem; }
 .security-item p { color: var(--text-muted); font-size: 0.9rem; }
 
-/* --- PROOF SECTION --- */
-.proof-card {
-  padding: var(--space-lg);
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 16px;
-  margin-top: var(--space-lg);
-}
-
-.proof-card .terminal-line {
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  padding: 0.4rem 0;
-  color: var(--text-muted);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.proof-card .terminal-line:last-child { border-bottom: none; }
-.proof-card .terminal-line .cmd { color: var(--accent); }
-.proof-card .terminal-line .output { color: var(--text-dim); }
-.proof-card .terminal-line .success { color: var(--green); }
-
-/* --- FAQ --- */
-.faq-list {
-  max-width: 800px;
-  margin: var(--space-lg) auto 0;
-}
-
-.faq-item {
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.faq-q {
-  width: 100%;
-  background: none;
-  border: none;
-  padding: var(--space-md) 0;
-  color: var(--text);
-  font-size: 1.1rem;
-  font-family: var(--font-body);
-  font-weight: 500;
-  text-align: left;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: color 0.2s;
-}
-
+/* FAQ */
+.faq-list { max-width: 800px; margin: var(--space-lg) auto 0; }
+.faq-item { border-bottom: 1px solid var(--border-subtle); }
+.faq-q { width: 100%; background: none; border: none; padding: var(--space-md) 0; color: var(--text); font-size: 1.1rem; font-family: var(--font-body); font-weight: 500; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: color 0.2s; }
 .faq-q:hover { color: var(--accent); }
-
-.faq-q .arrow {
-  font-size: 1.2rem;
-  transition: transform 0.3s;
-  color: var(--text-dim);
-}
-
+.faq-q .arrow { font-size: 1.2rem; transition: transform 0.3s; color: var(--text-dim); }
 .faq-item.open .faq-q .arrow { transform: rotate(45deg); color: var(--accent); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.faq-item.open .faq-a { max-height: 300px; padding-bottom: var(--space-md); }
+.faq-a p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; }
 
-.faq-a {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, padding 0.3s;
-}
-
-.faq-item.open .faq-a {
-  max-height: 300px;
-  padding-bottom: var(--space-md);
-}
-
-.faq-a p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.7;
-}
-
-/* --- CTA SECTION --- */
-.cta-section {
-  padding: var(--space-2xl) 0;
-  text-align: center;
-  position: relative;
-}
-
-.cta-section::before {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80vw;
-  height: 60vh;
-  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
-  pointer-events: none;
-}
-
+/* CTA */
+.cta-section { padding: var(--space-2xl) 0; text-align: center; position: relative; }
+.cta-section::before { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80vw; height: 60vh; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; }
 .cta-section > * { position: relative; z-index: 1; }
 
-.cta-section h2 { margin-bottom: var(--space-sm); }
-.cta-section p.lead {
-  margin: 0 auto var(--space-lg);
-  max-width: 50ch;
-}
-
-/* --- FOOTER --- */
-.footer {
-  padding: var(--space-lg) 0;
-  border-top: 1px solid var(--border-subtle);
-  text-align: center;
-}
-
-.footer p {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  margin: 0 auto;
-}
-
+/* FOOTER */
+.footer { padding: var(--space-lg) 0; border-top: 1px solid var(--border-subtle); text-align: center; }
+.footer p { color: var(--text-dim); font-size: 0.85rem; margin: 0 auto; }
 .footer a { color: var(--text-muted); text-decoration: none; }
 .footer a:hover { color: var(--accent); }
 
-/* --- ANIMATIONS --- */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(24px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .hero h1 { font-size: 2.4rem; }
   .hero-actions { flex-direction: column; }
   .btn-primary, .btn-ghost { width: 100%; justify-content: center; }
-  .proof-stats { gap: var(--space-md); }
-  .features-grid, .security-grid { grid-template-columns: 1fr; }
-  .compare-table { font-size: 0.8rem; }
   .pricing-card { padding: var(--space-md); }
   .price-main { font-size: 3rem; }
-  .process-step { grid-template-columns: 48px 1fr; }
-  .step-number { width: 48px; height: 48px; font-size: 1.2rem; }
+  .wizard-steps { flex-wrap: wrap; gap: 0.75rem; }
+  .llm-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -750,203 +431,395 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
 <!-- HEADER -->
 <header class="header">
   <div class="container header-inner">
-    <a href="#" class="logo">
-      <span class="logo-mark">🐟</span>
-      Clawsourcing
-    </a>
-    <a href="#consult" class="header-cta">Free Consult →</a>
+    <a href="#" class="logo"><span class="logo-mark">🐟</span> Clawsourcing</a>
+    <nav class="header-nav">
+      <a href="#flow">How it works</a>
+      <a href="#demo">Demo</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#consult" class="header-cta">Free Consult →</a>
+    </nav>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="hero">
   <div class="container hero-content">
-    <div class="hero-badge">
-      <span class="dot"></span>
-      Our AI runs our business. Every single day.
-    </div>
+    <div class="hero-badge"><span class="dot"></span>Our AI runs our business. Every single day.</div>
     <h1>AI employees,<br><em>engineered</em> — not configured.</h1>
     <p class="lead">Other providers take an off-the-shelf AI platform and adjust the settings. We build custom systems from scratch — skills, memory, workflows — for your exact business. Then we keep making them better every month.</p>
     <div class="hero-actions">
       <a href="#consult" class="btn-primary">Book a Free Consult</a>
-      <a href="#how-it-works" class="btn-ghost">See how it works</a>
+      <a href="#flow" class="btn-ghost">See the full journey</a>
     </div>
   </div>
 </section>
 
-<!-- SOCIAL PROOF -->
-<div class="proof-bar">
-  <div class="container">
-    <div class="proof-stats">
-      <div class="proof-stat">
-        <span class="number">24/7</span>
-        <span class="label">Always working</span>
-      </div>
-      <div class="proof-stat">
-        <span class="number">&lt;48h</span>
-        <span class="label">Average deploy time</span>
-      </div>
-      <div class="proof-stat">
-        <span class="number">€8,000</span>
-        <span class="label">Total first year cost</span>
-      </div>
-      <div class="proof-stat">
-        <span class="number">0</span>
-        <span class="label">Lock-in contracts</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- PROBLEM -->
-<section class="section" id="problem">
+<!-- FLOW SECTION -->
+<section class="section" id="flow">
   <div class="container">
     <div class="section-head reveal">
-      <span class="section-label">The Problem</span>
-      <h2>You know AI can do this work.<br>Getting there is the brutal part.</h2>
-      <p class="lead">There's a gap between "AI can write emails" and actually having an AI that triages your inbox, responds in your voice, and escalates the right things. That gap is weeks of engineering, not a settings page.</p>
+      <span class="section-label">The Journey</span>
+      <h2>From first contact to a working AI employee.<br>Every step, transparent.</h2>
+      <p class="lead">Here's exactly what happens, who does what, and when you pay. No surprises.</p>
     </div>
 
-    <div class="problem-grid">
-      <div class="problem-card reveal">
-        <div class="icon">🔧</div>
-        <h3>The configuration trap</h3>
-        <p>You spend weeks configuring prompts, wiring APIs, debugging memory issues. You get 60% there and give up. The AI can talk, but it can't actually <em>do</em> your work.</p>
+    <div class="flow-container">
+      <!-- Phase 1: Discovery -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker free">1</div>
+        <div class="phase-header">
+          <h3>Discovery & Scope <span class="phase-tag free">Free</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">No payment, no registration. Just a conversation.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Fill out the consult form</strong> — what role, what tools, what "good" looks like</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Research your business</strong> — we scrape your site, analyze workflows, study your industry</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Deliver a scope document</strong> — exactly what we'll build, which skills, which channels, timeline</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Review & approve</strong> — ask questions, request changes, take your time</span>
+          </div>
+        </div>
       </div>
-      <div class="problem-card reveal">
-        <div class="icon">📦</div>
-        <h3>The template problem</h3>
-        <p>Most "managed AI" providers give you a generic config. Same skills for every client. When your business needs something custom — a specific workflow, a niche integration — they can't build it.</p>
+
+      <!-- Phase 2: Payment -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker paid">2</div>
+        <div class="phase-header">
+          <h3>Setup Payment <span class="phase-tag payment">€1,400 one-time</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">You only pay after approving the scope. No commitment before this point.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Pay setup fee via Stripe</strong> — secure payment link, standard checkout</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who auto">Auto</span>
+            <span class="step-text"><strong>Your account is created</strong> — client portal access, project initialized</span>
+          </div>
+        </div>
       </div>
-      <div class="problem-card reveal">
-        <div class="icon">🧊</div>
-        <h3>Frozen in time</h3>
-        <p>A normal AI setup is frozen the day you configure it. It never gets better unless you put in more work. And you won't — you have a business to run.</p>
+
+      <!-- Phase 3: Onboarding -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker active">3</div>
+        <div class="phase-header">
+          <h3>Guided Setup <span class="phase-tag us">5 minutes from you</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">You make 3 choices. We handle everything else.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Choose your channel(s)</strong> — Telegram, Discord, WhatsApp, Email, Slack</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Choose your LLM</strong> — Claude (Anthropic) or ChatGPT (OpenAI)</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Paste your API key</strong> — 30-second video shows you exactly where to find it</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Create bots & configure channels</strong> — Telegram bot, Discord bot, email setup — all handled</span>
+          </div>
+        </div>
       </div>
-      <div class="problem-card reveal">
-        <div class="icon">🤷</div>
-        <h3>No proof it works</h3>
-        <p>Most AI service providers have zero case studies. Zero testimonials. They sell the dream, not the evidence. You're paying for promises.</p>
+
+      <!-- Phase 4: Build -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker active">4</div>
+        <div class="phase-header">
+          <h3>Build & Deploy <span class="phase-tag us">3-7 days</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">You wait. We engineer.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Build custom persona</strong> — voice, tone, decision logic, escalation rules (SOUL.md)</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Develop custom skills</strong> — the workflows that make your Claw uniquely useful</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who auto">Auto</span>
+            <span class="step-text"><strong>Provision dedicated server</strong> — isolated DigitalOcean droplet, your data only</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Install, configure, test</strong> — OpenClaw + memory system + tools + security hardening</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Internal QA</strong> — we test every workflow before you see it</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 5: Live -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker active">5</div>
+        <div class="phase-header">
+          <h3>Go Live <span class="phase-tag payment">€550/mo starts</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">Your AI employee starts working. Monthly subscription begins.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who auto">Auto</span>
+            <span class="step-text"><strong>Monthly subscription activates</strong> — €550/mo via Stripe, cancel anytime</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who client">You</span>
+            <span class="step-text"><strong>Start talking to your Claw</strong> — via your chosen channel, like a real teammate</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Monitor first 2 weeks closely</strong> — fine-tune based on real usage and your feedback</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 6: Ongoing -->
+      <div class="flow-phase reveal">
+        <div class="phase-marker active">6</div>
+        <div class="phase-header">
+          <h3>Ongoing Improvement <span class="phase-tag us">Every month</span></h3>
+          <p class="text-muted" style="font-size:0.9rem;">Your Claw gets better whether you do anything or not.</p>
+        </div>
+        <div class="phase-steps">
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Monthly improvements</strong> — new skills, better prompts, smarter memory</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who auto">Auto</span>
+            <span class="step-text"><strong>Cross-client intelligence</strong> — patterns from all clients improve yours (opt-in)</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who auto">Auto</span>
+            <span class="step-text"><strong>24/7 monitoring</strong> — uptime, errors, anomalies watched around the clock</span>
+          </div>
+          <div class="phase-step">
+            <span class="step-who us">Us</span>
+            <span class="step-text"><strong>Priority support</strong> — issues fixed by the engineers who built it</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- COMPARISON -->
-<section class="section" style="background: var(--bg-elevated);">
+<!-- INTERACTIVE DEMO -->
+<section class="section" style="background: var(--bg-elevated);" id="demo">
   <div class="container">
     <div class="section-head text-center reveal">
-      <span class="section-label">Three Options</span>
-      <h2>Configure it yourself. Hire a host.<br>Or hire the team that <em>builds</em> them.</h2>
+      <span class="section-label">Interactive Demo</span>
+      <h2>See what each step looks like.</h2>
+      <p class="lead" style="margin: var(--space-sm) auto 0;">Click through the tabs to preview the actual client experience.</p>
     </div>
 
-    <div class="compare-table reveal">
-      <div class="compare-header"></div>
-      <div class="compare-header">DIY Install</div>
-      <div class="compare-header">Managed Hosting</div>
-      <div class="compare-header ours">Clawsourcing</div>
-
-      <div class="compare-feature">Custom-built for your workflows</div>
-      <div class="compare-no">You figure it out</div>
-      <div class="compare-no">Generic config</div>
-      <div class="compare-yes">✓ From scratch</div>
-
-      <div class="compare-feature">Custom skill development</div>
-      <div class="compare-no">You code it</div>
-      <div class="compare-no">Marketplace only</div>
-      <div class="compare-yes">✓ Included</div>
-
-      <div class="compare-feature">Active monthly improvement</div>
-      <div class="compare-no">Only if you do it</div>
-      <div class="compare-partial">Keeps lights on</div>
-      <div class="compare-yes">✓ Every month</div>
-
-      <div class="compare-feature">Memory that actually works</div>
-      <div class="compare-no">Trial and error</div>
-      <div class="compare-partial">Basic</div>
-      <div class="compare-yes">✓ Battle-tested</div>
-
-      <div class="compare-feature">Production-quality from day 1</div>
-      <div class="compare-no">Weeks of work</div>
-      <div class="compare-partial">Decent</div>
-      <div class="compare-yes">✓ Guaranteed</div>
-
-      <div class="compare-feature">Cross-client intelligence</div>
-      <div class="compare-no">—</div>
-      <div class="compare-no">—</div>
-      <div class="compare-yes">✓ Shared upgrades</div>
-
-      <div class="compare-feature">You own everything</div>
-      <div class="compare-yes">✓</div>
-      <div class="compare-partial">Usually</div>
-      <div class="compare-yes">✓ Zero lock-in</div>
-    </div>
-  </div>
-</section>
-
-<!-- WHAT YOU GET -->
-<section class="section" id="features">
-  <div class="container">
-    <div class="section-head text-center reveal">
-      <span class="section-label">What You Get</span>
-      <h2>Not a default config.<br>A production-grade AI employee.</h2>
-      <p class="lead" style="margin: var(--space-sm) auto 0;">Every Clawsourced employee ships with systems we've built and refined by actually running a business with AI — not just selling it.</p>
-    </div>
-
-    <div class="features-grid">
-      <div class="feature-card reveal">
-        <div class="feature-icon">🧠</div>
-        <h3>Memory that sticks</h3>
-        <p>Our knowledge management system is based on Tiago Forte's PARA methodology — daily notes, progressive summarization, project/area indexing. Your Claw remembers people, decisions, context. No more repeating yourself.</p>
+    <div class="demo-container reveal">
+      <div class="demo-tabs">
+        <button class="demo-tab active" data-tab="consult">1. Free Consult</button>
+        <button class="demo-tab" data-tab="setup">2. Guided Setup</button>
+        <button class="demo-tab" data-tab="dashboard">3. Your Dashboard</button>
+        <button class="demo-tab" data-tab="offboard">4. If You Leave</button>
       </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">⚙️</div>
-        <h3>Custom skills, built for you</h3>
-        <p>Need your AI to scrape competitor prices, generate reports in a specific format, or handle a workflow no plugin covers? We build custom skills. Not "coming soon" — during your setup.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">👤</div>
-        <h3>Your voice, your rules</h3>
-        <p>Every Claw gets a tailored persona — communication style, decision boundaries, escalation logic. It knows when to handle things and when to ask you first.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🔗</div>
-        <h3>Connected tool stack</h3>
-        <p>Email, GitHub, CRM connectors, web scraping, document generation, deployment pipelines — pre-wired and tested. We add your specific integrations during onboarding.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">📈</div>
-        <h3>Cross-client intelligence</h3>
-        <p>When we discover a better memory architecture, a smarter prompting technique, a faster workflow — every client gets the upgrade. Your AI gets better while you sleep.</p>
-      </div>
-      <div class="feature-card reveal">
-        <div class="feature-icon">🛠️</div>
-        <h3>Engineering team on call</h3>
-        <p>Not a helpdesk. The same engineers who build the systems maintain yours. When something breaks or needs improvement, the people who understand it best fix it.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- WE EAT OUR OWN COOKING -->
-<section class="section" style="background: var(--bg-elevated);">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-label">Proof, Not Promises</span>
-      <h2>We run our business with the same system we sell you.</h2>
-      <p class="lead">Our AI — Koi — manages our sales pipeline, generates client deliverables, handles email, builds websites, runs SEO audits, and writes content. Every day. Not a demo. The real thing.</p>
-    </div>
+      <!-- Tab 1: Consult Form -->
+      <div class="demo-panel active" id="tab-consult">
+        <h3 style="margin-bottom: var(--space-sm);">Free Consult Form</h3>
+        <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">No payment. No account. Tell us about the role and we follow up within 24 hours.</p>
+        <form onsubmit="event.preventDefault(); alert('Demo only — form not connected yet.')">
+          <div class="form-grid">
+            <div class="form-group"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
+            <div class="form-group"><label>Email</label><input type="email" placeholder="jane@company.com"></div>
+            <div class="form-group"><label>Company Name</label><input type="text" placeholder="Acme Inc (optional)"></div>
+            <div class="form-group"><label>Company Website</label><input type="url" placeholder="https://acme.com (optional)"></div>
+            <div class="form-group full"><label>What role do you want to automate?</label><textarea placeholder="Describe what this person does today — tasks, responsibilities, tools they use..."></textarea></div>
+            <div class="form-group full"><label>What tools do you currently use?</label><input type="text" placeholder="Gmail, Slack, HubSpot, Shopify..."></div>
+            <div class="form-group full">
+              <label>Claw Type Interest</label>
+              <div class="claw-type-grid">
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">🎯 Chief of Staff</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">✍️ Content</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">💬 Support</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">📞 Sales</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">🖥️ Dev</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">📋 Ops</div>
+                <div class="claw-type-option" onclick="this.classList.toggle('selected')">🔮 Custom</div>
+              </div>
+            </div>
+            <div class="form-group full"><label>Anything else? (optional)</label><textarea placeholder="Budget, timeline, specific requirements..."></textarea></div>
+          </div>
+          <button type="submit" class="btn-primary" style="margin-top: var(--space-md); width: 100%; justify-content: center;">Submit — Free, No Commitment</button>
+        </form>
+      </div>
 
-    <div class="proof-card reveal">
-      <div class="terminal-line"><span class="cmd">$</span> koi daily-log --today</div>
-      <div class="terminal-line"><span class="output">06:00</span> Morning brief generated — 3 priorities, 2 follow-ups</div>
-      <div class="terminal-line"><span class="output">08:14</span> Lead research: scraped 47 businesses, qualified 12</div>
-      <div class="terminal-line"><span class="output">09:30</span> Client demo site built and deployed → <span class="success">live in 4 hours</span></div>
-      <div class="terminal-line"><span class="output">11:00</span> SEO audit completed for prospect — 23-page report generated</div>
-      <div class="terminal-line"><span class="output">14:20</span> Email triaged — 8 messages, 2 flagged for human review</div>
-      <div class="terminal-line"><span class="output">16:45</span> Sales training session — cold call roleplay with scoring</div>
-      <div class="terminal-line"><span class="output">23:00</span> Nightly review — knowledge base updated, tomorrow's priorities set</div>
-      <div class="terminal-line"><span class="cmd">Status:</span> <span class="success">All tasks completed. 0 escalations needed.</span></div>
+      <!-- Tab 2: Guided Setup -->
+      <div class="demo-panel" id="tab-setup">
+        <div class="wizard-steps">
+          <div class="wizard-step-indicator active" id="ws1"><div class="wizard-step-num">1</div> Channel</div>
+          <div class="wizard-step-indicator" id="ws2"><div class="wizard-step-num">2</div> LLM</div>
+          <div class="wizard-step-indicator" id="ws3"><div class="wizard-step-num">3</div> API Key</div>
+          <div class="wizard-step-indicator" id="ws4"><div class="wizard-step-num">4</div> Activate</div>
+        </div>
+
+        <!-- Step 1: Channel -->
+        <div class="wizard-panel active" id="wizard-1">
+          <h3 style="margin-bottom: 0.25rem;">Choose your communication channel</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">How will you talk to your Claw? Pick one or more.</p>
+          <div class="channel-grid">
+            <div class="channel-option" onclick="this.classList.toggle('selected')">
+              <div class="ch-icon">✈️</div>
+              <div class="ch-name">Telegram</div>
+              <div class="ch-desc">Bot in your chat</div>
+              <div class="ch-badge auto">We set it up</div>
+            </div>
+            <div class="channel-option" onclick="this.classList.toggle('selected')">
+              <div class="ch-icon">🎮</div>
+              <div class="ch-name">Discord</div>
+              <div class="ch-desc">Bot in your server</div>
+              <div class="ch-badge auto">We set it up</div>
+            </div>
+            <div class="channel-option" onclick="this.classList.toggle('selected')">
+              <div class="ch-icon">💬</div>
+              <div class="ch-name">WhatsApp</div>
+              <div class="ch-desc">Business API</div>
+              <div class="ch-badge guided">You verify business</div>
+            </div>
+            <div class="channel-option" onclick="this.classList.toggle('selected')">
+              <div class="ch-icon">📧</div>
+              <div class="ch-name">Email</div>
+              <div class="ch-desc">Dedicated inbox</div>
+              <div class="ch-badge auto">We set it up</div>
+            </div>
+            <div class="channel-option" onclick="this.classList.toggle('selected')">
+              <div class="ch-icon">💼</div>
+              <div class="ch-name">Slack</div>
+              <div class="ch-desc">Workspace bot</div>
+              <div class="ch-badge guided">You approve app</div>
+            </div>
+          </div>
+          <button class="btn-primary" style="margin-top: var(--space-md);" onclick="wizardNext(2)">Next: Choose LLM →</button>
+        </div>
+
+        <!-- Step 2: LLM -->
+        <div class="wizard-panel" id="wizard-2">
+          <h3 style="margin-bottom: 0.25rem;">Choose your AI model</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Which AI brain powers your Claw? You provide your own API key.</p>
+          <div class="llm-grid">
+            <div class="llm-option" onclick="selectLLM(this, 'anthropic')">
+              <div class="llm-name">Claude (Anthropic)</div>
+              <div class="llm-desc">Best for nuanced writing, analysis, and complex reasoning. Our recommendation.</div>
+              <div class="llm-cost">~$20-50/mo typical usage</div>
+            </div>
+            <div class="llm-option" onclick="selectLLM(this, 'openai')">
+              <div class="llm-name">ChatGPT (OpenAI)</div>
+              <div class="llm-desc">Best for code, structured tasks, and tool use. Widely supported.</div>
+              <div class="llm-cost">~$15-40/mo typical usage</div>
+            </div>
+          </div>
+          <div style="margin-top: var(--space-sm); display:flex; gap: 0.5rem;">
+            <button class="btn-ghost" onclick="wizardNext(1)">← Back</button>
+            <button class="btn-primary" onclick="wizardNext(3)">Next: API Key →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: API Key -->
+        <div class="wizard-panel" id="wizard-3">
+          <h3 style="margin-bottom: 0.25rem;">Paste your API key</h3>
+          <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Your key is encrypted and stored securely. We never see it in plaintext after setup.</p>
+          <div class="form-group">
+            <label>API Key</label>
+            <input type="password" placeholder="sk-ant-... or sk-..." style="font-family: var(--font-mono);">
+          </div>
+          <div class="api-key-help">
+            📹 <strong>30-second guide:</strong> <a href="#">How to get your Claude API key</a> | <a href="#">How to get your OpenAI API key</a><br>
+            <span style="font-size: 0.8rem; color: var(--text-dim);">4 clicks. Copy. Paste here. Done.</span>
+          </div>
+          <div style="margin-top: var(--space-md); display:flex; gap: 0.5rem;">
+            <button class="btn-ghost" onclick="wizardNext(2)">← Back</button>
+            <button class="btn-primary" onclick="wizardNext(4)">Activate My Claw →</button>
+          </div>
+        </div>
+
+        <!-- Step 4: Done -->
+        <div class="wizard-panel" id="wizard-4">
+          <div style="text-align: center; padding: var(--space-lg) 0;">
+            <div style="font-size: 4rem; margin-bottom: var(--space-sm);">🎉</div>
+            <h3>Setup complete!</h3>
+            <p class="text-muted" style="margin: var(--space-sm) auto; max-width: 40ch;">We're building your Claw now. You'll receive a notification when it's ready — typically 3-7 days.</p>
+            <div class="status-grid" style="max-width: 400px; margin: var(--space-md) auto;">
+              <div class="status-row"><span class="status-label">Channel</span><span class="status-badge green">Configured</span></div>
+              <div class="status-row"><span class="status-label">LLM</span><span class="status-badge green">Connected</span></div>
+              <div class="status-row"><span class="status-label">Server</span><span class="status-badge amber">Provisioning...</span></div>
+              <div class="status-row"><span class="status-label">Persona</span><span class="status-badge blue">Building</span></div>
+              <div class="status-row"><span class="status-label">Skills</span><span class="status-badge blue">In development</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Dashboard -->
+      <div class="demo-panel" id="tab-dashboard">
+        <h3 style="margin-bottom: 0.25rem;">Your Client Dashboard</h3>
+        <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Once live, you see your Claw's status at a glance.</p>
+        <div class="status-grid">
+          <div class="status-row"><span class="status-label">🟢 Claw Status</span><span class="status-badge green">Live</span></div>
+          <div class="status-row"><span class="status-label">📡 Channel: Telegram</span><span class="status-badge green">Active</span></div>
+          <div class="status-row"><span class="status-label">📧 Channel: Email</span><span class="status-badge green">Active</span></div>
+          <div class="status-row"><span class="status-label">🧠 LLM: Claude Sonnet</span><span class="status-badge green">Connected</span></div>
+          <div class="status-row"><span class="status-label">💾 Last Backup</span><span class="status-badge blue">2 hours ago</span></div>
+          <div class="status-row"><span class="status-label">📈 Uptime (30d)</span><span class="status-badge green">99.9%</span></div>
+          <div class="status-row"><span class="status-label">🔧 Last Improvement</span><span class="status-badge amber">3 days ago</span></div>
+          <div class="status-row"><span class="status-label">💳 Next Invoice</span><span class="status-badge blue">€550 on Apr 1</span></div>
+        </div>
+        <p class="text-muted" style="margin-top: var(--space-md); font-size: 0.85rem;">You see status. We handle everything behind it.</p>
+      </div>
+
+      <!-- Tab 4: Offboarding -->
+      <div class="demo-panel" id="tab-offboard">
+        <h3 style="margin-bottom: 0.25rem;">If You Decide to Leave</h3>
+        <p class="text-muted" style="margin-bottom: var(--space-md); font-size: 0.9rem;">Zero lock-in. Here's exactly what happens — no fine print.</p>
+        <div class="offboard-timeline">
+          <div class="offboard-item">
+            <span class="offboard-day">Day 0</span>
+            <span class="offboard-text">You tell us you're leaving. We cancel your subscription at period end. <strong>No questions, no retention calls.</strong></span>
+          </div>
+          <div class="offboard-item">
+            <span class="offboard-day">Days 1-14</span>
+            <span class="offboard-text">Your Claw runs in <strong>read-only mode</strong>. Full access to your data, configs, and conversation history.</span>
+          </div>
+          <div class="offboard-item">
+            <span class="offboard-day">Day 14</span>
+            <span class="offboard-text">We create a <strong>full server snapshot</strong>. Your droplet is stopped.</span>
+          </div>
+          <div class="offboard-item">
+            <span class="offboard-day">Days 15-30</span>
+            <span class="offboard-text">Choose your handover: <strong>download all files</strong> (configs, skills, memory, data) or <strong>transfer the server</strong> to your own DigitalOcean account. Both free.</span>
+          </div>
+          <div class="offboard-item">
+            <span class="offboard-day">Day 30</span>
+            <span class="offboard-text">All your data is <strong>permanently deleted</strong> from our systems. Clean break.</span>
+          </div>
+        </div>
+        <p style="margin-top: var(--space-md); padding: var(--space-sm) 1rem; background: var(--surface); border-radius: 8px; font-size: 0.9rem; color: var(--text-muted);">
+          <strong style="color: var(--accent);">Why we're explicit about this:</strong> Most providers say "you own everything" but don't explain what happens. We do. Because trust isn't built on vague promises.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -957,228 +830,84 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
     <div class="section-head text-center reveal">
       <span class="section-label">Choose Your Role</span>
       <h2>Who do you want to hire?</h2>
-      <p class="lead" style="margin: var(--space-sm) auto 0;">Every role comes with custom skill development, battle-tested memory, and active monthly improvement.</p>
     </div>
-
     <div class="roles-grid">
-      <div class="role-card reveal">
-        <div class="role-emoji">🎯</div>
-        <h3>Chief of Staff</h3>
-        <div class="role-replaces">Replace your right hand</div>
-        <p>Email, scheduling, research, customer support, content, operations — whatever needs doing. Our most battle-tested configuration, refined by running a real business.</p>
-        <span class="role-tag">Most Popular</span>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">✍️</div>
-        <h3>Content Claw</h3>
-        <div class="role-replaces">Replace your content marketer</div>
-        <p>Researches topics, writes SEO-optimized blog posts, manages social media, sends newsletters. Publishes while you sleep. In your brand voice.</p>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">💬</div>
-        <h3>Support Claw</h3>
-        <div class="role-replaces">Replace your support rep</div>
-        <p>Triages inbound email, responds to common questions instantly, escalates edge cases to you with full context. 24/7, zero wait time.</p>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">📞</div>
-        <h3>Sales Claw</h3>
-        <div class="role-replaces">Replace your SDR</div>
-        <p>Follows up with leads within minutes, writes personalized outreach, updates your CRM, qualifies prospects, books meetings on your calendar.</p>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">🖥️</div>
-        <h3>Dev Claw</h3>
-        <div class="role-replaces">Replace your on-call engineer</div>
-        <p>Monitors errors, ships fixes, runs deployments, opens PRs. Your team focuses on features while the Claw handles operations.</p>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">📋</div>
-        <h3>Ops Claw</h3>
-        <div class="role-replaces">Replace your office manager</div>
-        <p>Scheduling, invoicing, vendor follow-ups, internal handoffs. The unglamorous work that eats 20 hours a week, automated.</p>
-      </div>
-      <div class="role-card reveal">
-        <div class="role-emoji">🔮</div>
-        <h3>Custom Claw</h3>
-        <div class="role-replaces">Replace... whoever</div>
-        <p>Tell us the role. If a human does it on a computer, we can build a Claw for it. Including the custom skills nobody else can write.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROCESS -->
-<section class="section" style="background: var(--bg-elevated);" id="how-it-works">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="section-label">How It Works</span>
-      <h2>From intake to employee.<br>Days, not months.</h2>
-    </div>
-
-    <div class="process-steps">
-      <div class="process-step reveal">
-        <div class="step-number">1</div>
-        <div class="step-content">
-          <h3>Tell us the role</h3>
-          <p>Free consult — what does the person do today? What tools do they use? What does "good" look like? We ask the questions nobody else thinks to ask.</p>
-          <span class="step-time">30-minute call, free</span>
-        </div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-number">2</div>
-        <div class="step-content">
-          <h3>We scope & design</h3>
-          <p>We map your workflows, identify what to automate first, design custom skills, and send you a detailed build plan. No surprises.</p>
-          <span class="step-time">48 hours</span>
-        </div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>We build it</h3>
-          <p>Custom persona, memory system, skill development, tool integrations, security hardening. We test everything before you see it. Not configured — engineered.</p>
-          <span class="step-time">3-7 days</span>
-        </div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-number">4</div>
-        <div class="step-content">
-          <h3>Your Claw goes live</h3>
-          <p>You start talking to it like a teammate. It does the work. We monitor the first two weeks closely and fine-tune based on real usage.</p>
-          <span class="step-time">Day one of the rest of your life</span>
-        </div>
-      </div>
-      <div class="process-step reveal">
-        <div class="step-number">5</div>
-        <div class="step-content">
-          <h3>We keep making it better</h3>
-          <p>Monthly improvements, cross-client intelligence, new skill development, performance monitoring. Your AI employee gets smarter whether you do anything or not.</p>
-          <span class="step-time">Every month, forever</span>
-        </div>
-      </div>
+      <div class="role-card reveal"><div class="role-emoji">🎯</div><h3>Chief of Staff</h3><div class="role-replaces">Replace your right hand</div><p>Email, scheduling, research, customer support, content, operations — whatever needs doing.</p><span class="role-tag">Most Popular</span></div>
+      <div class="role-card reveal"><div class="role-emoji">✍️</div><h3>Content Claw</h3><div class="role-replaces">Replace your content marketer</div><p>Researches, writes SEO-optimized posts, manages social media, sends newsletters.</p></div>
+      <div class="role-card reveal"><div class="role-emoji">💬</div><h3>Support Claw</h3><div class="role-replaces">Replace your support rep</div><p>Triages email, responds instantly, escalates edge cases with full context. 24/7.</p></div>
+      <div class="role-card reveal"><div class="role-emoji">📞</div><h3>Sales Claw</h3><div class="role-replaces">Replace your SDR</div><p>Follows up with leads, writes personalized outreach, updates CRM, books meetings.</p></div>
+      <div class="role-card reveal"><div class="role-emoji">🖥️</div><h3>Dev Claw</h3><div class="role-replaces">Replace your on-call engineer</div><p>Monitors errors, ships fixes, runs deployments, opens PRs.</p></div>
+      <div class="role-card reveal"><div class="role-emoji">📋</div><h3>Ops Claw</h3><div class="role-replaces">Replace your office manager</div><p>Scheduling, invoicing, vendor follow-ups, internal handoffs.</p></div>
+      <div class="role-card reveal"><div class="role-emoji">🔮</div><h3>Custom Claw</h3><div class="role-replaces">Replace... whoever</div><p>Tell us the role. If a human does it on a computer, we can build a Claw for it.</p></div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section class="section" id="pricing">
+<section class="section" style="background: var(--bg-elevated);" id="pricing">
   <div class="container">
     <div class="section-head text-center reveal">
       <span class="section-label">Pricing</span>
-      <h2>Transparent. All-inclusive.<br>No hidden costs.</h2>
-      <p class="lead" style="margin: var(--space-sm) auto 0;">No separate AI subscriptions. No surprise invoices. One setup fee, one monthly fee. That's it.</p>
+      <h2>Transparent. No hidden costs.</h2>
+      <p class="lead" style="margin: var(--space-sm) auto 0;">You pay us. You pay your LLM provider. That's it. Two bills, no surprises.</p>
     </div>
-
     <div class="pricing-card reveal">
       <div class="price-setup">One-time setup</div>
       <div class="price-main">€1,400</div>
       <p class="lead" style="margin: var(--space-sm) auto; font-size: 0.95rem;">Custom build, deployment, and onboarding</p>
-
       <div style="margin: var(--space-md) 0; padding: var(--space-md) 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
         <div class="price-setup">Then</div>
         <div class="price-main">€550<span>/mo</span></div>
-        <p class="lead" style="margin: var(--space-xs) auto 0; font-size: 0.95rem;">Everything included. No extras.</p>
+        <p class="lead" style="margin: var(--space-xs) auto 0; font-size: 0.95rem;">Hosting, monitoring, improvements, support.</p>
       </div>
-
       <ul class="price-includes">
         <li><span class="check">✓</span> Custom-built AI employee for your workflows</li>
         <li><span class="check">✓</span> Dedicated isolated server</li>
-        <li><span class="check">✓</span> AI model costs included — no separate subscription</li>
         <li><span class="check">✓</span> Custom skill development</li>
         <li><span class="check">✓</span> Battle-tested memory system</li>
+        <li><span class="check">✓</span> Channel setup (Telegram, Discord, Email — we create it)</li>
         <li><span class="check">✓</span> 24/7 monitoring & automated backups</li>
         <li><span class="check">✓</span> Monthly improvements & cross-client intelligence</li>
         <li><span class="check">✓</span> Engineering team support</li>
         <li><span class="check">✓</span> Zero lock-in — leave anytime, take everything</li>
       </ul>
-
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: var(--space-sm);">+ Your LLM API costs (~€20-50/mo typical, paid directly to Anthropic/OpenAI)</p>
       <a href="#consult" class="btn-primary" style="width: 100%; justify-content: center;">Book Free Consult</a>
-
-      <p class="price-total">First year total: €8,000 · Month-to-month, cancel anytime</p>
+      <p class="price-total">First year total: ~€8,000 · Month-to-month, cancel anytime</p>
     </div>
   </div>
 </section>
 
 <!-- SECURITY -->
-<section class="section" style="background: var(--bg-elevated);">
+<section class="section">
   <div class="container">
     <div class="section-head text-center reveal">
       <span class="section-label">Security</span>
       <h2>Built secure from day one.</h2>
-      <p class="lead" style="margin: var(--space-sm) auto 0;">Your Claw handles real business data. We treat that with the seriousness it deserves.</p>
     </div>
-
     <div class="security-grid">
-      <div class="security-item reveal">
-        <h3>🔒 Isolated Infrastructure</h3>
-        <p>Every Claw runs on its own dedicated server. No shared environments, no cross-client data leakage. Your system is yours alone.</p>
-      </div>
-      <div class="security-item reveal">
-        <h3>🔐 Encrypted Everything</h3>
-        <p>Data encrypted at rest and in transit. API keys in secure vaults, never in plaintext. Automatic TLS on every connection.</p>
-      </div>
-      <div class="security-item reveal">
-        <h3>🛡️ Managed Firewalls</h3>
-        <p>Locked down to only the ports and services needed. No unnecessary attack surface. We configure and maintain the rules.</p>
-      </div>
-      <div class="security-item reveal">
-        <h3>💾 Automated Backups</h3>
-        <p>Daily automated backups with point-in-time recovery. If something goes wrong, we restore — not rebuild.</p>
-      </div>
-      <div class="security-item reveal">
-        <h3>🔑 Least-Privilege Access</h3>
-        <p>Your Claw only touches the tools and data you authorize. We audit permissions during onboarding and enforce strict boundaries.</p>
-      </div>
-      <div class="security-item reveal">
-        <h3>📡 24/7 Monitoring</h3>
-        <p>Uptime, error rates, anomalies — watched around the clock. If something breaks at 3 AM, we fix it before you wake up.</p>
-      </div>
+      <div class="security-item reveal"><h3>🔒 Isolated Infrastructure</h3><p>Every Claw runs on its own dedicated server. No shared environments, no cross-client data leakage.</p></div>
+      <div class="security-item reveal"><h3>🔐 Encrypted Secrets</h3><p>API keys and credentials encrypted with AES-256. Stored in secure vault, never in plaintext.</p></div>
+      <div class="security-item reveal"><h3>🛡️ Managed Firewalls</h3><p>Locked down to necessary ports only. No unnecessary attack surface.</p></div>
+      <div class="security-item reveal"><h3>💾 Daily Backups</h3><p>Automated backups with point-in-time recovery. We restore, not rebuild.</p></div>
+      <div class="security-item reveal"><h3>🔑 Least Privilege</h3><p>Your Claw only touches tools and data you authorize. Strict permission boundaries.</p></div>
+      <div class="security-item reveal"><h3>📡 24/7 Monitoring</h3><p>Uptime, errors, anomalies — watched around the clock.</p></div>
     </div>
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="section" id="faq">
+<section class="section" style="background: var(--bg-elevated);" id="faq">
   <div class="container">
-    <div class="section-head text-center reveal">
-      <span class="section-label">Questions</span>
-      <h2>Straight answers.</h2>
-    </div>
-
+    <div class="section-head text-center reveal"><span class="section-label">Questions</span><h2>Straight answers.</h2></div>
     <div class="faq-list">
-      <div class="faq-item reveal">
-        <button class="faq-q">How is this different from setting up OpenClaw myself?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Same difference as buying a server vs. hiring a DevOps team. You could do it yourself, but every Clawsourced employee comes with a battle-tested memory system, custom-built skills for your business, a tailored persona, and an engineering team that actively improves it every month. You get the employee, not a homework assignment.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">How is this different from other managed AI providers?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Most providers configure templates. We engineer from scratch. When your business needs a skill that doesn't exist in any marketplace, we build it — included in your plan. We also run our own business with the same system, so every improvement we discover goes directly to our clients.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">Is the consult really free?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Yes. We review your workflows, ask discovery questions, and send you a concrete scope plan — no charge, no commitment. You only pay when you decide to move forward with a build.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">What do I need to provide?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Answers to our intake questions and access to the tools you want connected. That's it. AI model subscriptions, server hosting, everything — included in your plan. No separate bills.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">How fast can my Claw be live?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Most go live within one week of scope approval. Simple roles can be ready in 48 hours. Complex custom builds with multiple integrations take up to two weeks.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">Can I cancel?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Month-to-month. No contract. If you leave, we hand over every file, every config, every skill we built. Zero lock-in. We keep clients by being good, not by holding data hostage.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">Is my data safe?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>Your Claw runs on isolated, dedicated infrastructure. Nothing is shared between clients. Your business data flows through your Claw's runtime but is never logged, stored, or accessed by us. We maintain the AI layer — you own everything else.</p></div>
-      </div>
-      <div class="faq-item reveal">
-        <button class="faq-q">What about cross-client learning — do you see my data?<span class="arrow">+</span></button>
-        <div class="faq-a"><p>No. Cross-client intelligence means we share techniques, not data. When we find a better memory architecture or prompting strategy, we apply the pattern to all clients. Your actual business data never leaves your system. You can opt out of shared upgrades if you prefer.</p></div>
-      </div>
+      <div class="faq-item reveal"><button class="faq-q">How is this different from other managed AI providers?<span class="arrow">+</span></button><div class="faq-a"><p>Most providers configure templates. We engineer from scratch. When your business needs a skill that doesn't exist, we build it — included in your plan. We also run our own business with the same system, so every improvement goes directly to clients.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Why do I need my own API key?<span class="arrow">+</span></button><div class="faq-a"><p>Transparency and control. You see exactly what your AI costs, you're not locked into our markup, and if you leave, your API key stays yours. Typical usage is €20-50/month — far less than a human employee's lunch budget.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Is the consult really free?<span class="arrow">+</span></button><div class="faq-a"><p>Yes. We review your workflows, research your business, and deliver a concrete scope plan. No charge, no commitment. You only pay after approving the scope and deciding to build.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">How fast can my Claw be live?<span class="arrow">+</span></button><div class="faq-a"><p>Most go live within one week of payment. Simple roles in 48 hours. Complex builds with multiple integrations up to two weeks.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What happens if I want to cancel?<span class="arrow">+</span></button><div class="faq-a"><p>Month-to-month, no contract. 14-day grace period with full data access. Choose between downloading everything or transferring your server. Day 30, we delete all your data. Full details in the "If You Leave" section above.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">Can you see my business data?<span class="arrow">+</span></button><div class="faq-a"><p>No. Your Claw runs on isolated infrastructure. We maintain the AI layer — skills, prompts, configs. Your business data flows through your Claw but is never logged or accessed by us. API keys are encrypted; we don't read them after setup.</p></div></div>
+      <div class="faq-item reveal"><button class="faq-q">What if I need something custom?<span class="arrow">+</span></button><div class="faq-a"><p>That's our specialty. Custom skill development is included in your plan. Need your Claw to scrape competitor prices, generate reports in a specific format, or handle a workflow no plugin covers? We build it.</p></div></div>
     </div>
   </div>
 </section>
@@ -1188,9 +917,8 @@ p.lead { font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; }
   <div class="container">
     <span class="section-label reveal">Get Started</span>
     <h2 class="reveal">Tell us the role.<br>We'll handle the rest.</h2>
-    <p class="lead reveal">Free consult — no payment, no commitment. We'll follow up within 24 hours with discovery questions and a scope plan.</p>
-    <a href="mailto:hello@example.com?subject=Clawsourcing%20Consult" class="btn-primary reveal" style="font-size: 1.1rem; padding: 1rem 2.5rem;">Book Free Consult →</a>
-    <p class="text-muted reveal" style="margin-top: var(--space-sm); font-size: 0.85rem;">Or email us directly. Humans respond within 24 hours.</p>
+    <p class="lead reveal" style="margin: 0 auto var(--space-lg); max-width: 50ch;">Free consult — no payment, no commitment. We follow up within 24 hours.</p>
+    <a href="#demo" class="btn-primary reveal" style="font-size: 1.1rem; padding: 1rem 2.5rem;" onclick="document.querySelector('[data-tab=consult]').click()">Fill Out the Form →</a>
   </div>
 </section>
 
@@ -1208,15 +936,39 @@ const reveals = document.querySelectorAll('.reveal');
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => {
-        entry.target.classList.add('visible');
-      }, i * 60);
+      setTimeout(() => entry.target.classList.add('visible'), i * 50);
       observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
 reveals.forEach(el => observer.observe(el));
+
+// Demo tabs
+document.querySelectorAll('.demo-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Wizard navigation
+function wizardNext(step) {
+  document.querySelectorAll('.wizard-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('wizard-' + step).classList.add('active');
+  document.querySelectorAll('.wizard-step-indicator').forEach((s, i) => {
+    s.classList.remove('active', 'done');
+    if (i + 1 < step) s.classList.add('done');
+    if (i + 1 === step) s.classList.add('active');
+  });
+}
+
+// LLM selection
+function selectLLM(el, provider) {
+  document.querySelectorAll('.llm-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
 
 // FAQ accordion
 document.querySelectorAll('.faq-q').forEach(btn => {
@@ -1226,12 +978,6 @@ document.querySelectorAll('.faq-q').forEach(btn => {
     document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
     if (!wasOpen) item.classList.add('open');
   });
-});
-
-// Header shrink on scroll
-const header = document.querySelector('.header');
-window.addEventListener('scroll', () => {
-  header.style.borderBottomColor = window.scrollY > 50 ? 'var(--border)' : 'var(--border-subtle)';
 });
 </script>
 
